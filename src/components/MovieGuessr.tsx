@@ -1,13 +1,22 @@
 import "./MovieGuessr.css";
-import { useState, useEffect } from "react";
-import { getMovieData, getRandomMovieID } from "../utils";
+import { useState } from "react";
 import type { Movie } from "../types";
 import HintGrid from "./HintGrid";
-import EndGamePopup from "./EndGamePopUp";
+import EndRoundPopUp from "./EndRoundPopUp";
 
-function MovieGuessr() {
-    const [data, setData] = useState<Movie | null>(null);
-    const [loading, setLoading] = useState(true);
+interface MovieGuessrProps {
+    setTotalPoints: React.Dispatch<React.SetStateAction<number>>;
+    roundNum: number;
+    setRoundNum: React.Dispatch<React.SetStateAction<number>>;
+    data: Movie;
+}
+
+function MovieGuessr({
+    setTotalPoints,
+    roundNum,
+    setRoundNum,
+    data,
+}: MovieGuessrProps) {
     const [showPopUp, setShowPopUp] = useState(false);
 
     const [hintCount, setHintCount] = useState(1);
@@ -15,21 +24,6 @@ function MovieGuessr() {
     const [points, setPoints] = useState(5000);
     const [win, setWin] = useState(false);
     const [guessIsWrong, setGuessIsWrong] = useState(false);
-
-    useEffect(() => {
-        const movieID = getRandomMovieID();
-
-        getMovieData(movieID)
-            .then((movie) => {
-                console.log(movie);
-                setData(movie);
-                setLoading(false);
-            })
-            .catch((e) => {
-                console.error(e);
-                setLoading(false);
-            });
-    }, []);
 
     // Handle input changes
     const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -45,14 +39,15 @@ function MovieGuessr() {
     // Handle form submission
     const submitGuess = (event: React.MouseEvent<HTMLButtonElement>) => {
         event.preventDefault();
-        const isCorrect = verifyGuess(); // checks if answer is correct
-        if (isCorrect || points <= 1000) {
-            setShowPopUp(true);
+        const isCorrect = verifyGuess();
+        let isRoundOver = false;
 
-            if (isCorrect) {
-                setWin(true);
-            }
+        if (isCorrect) {
+            setWin(true);
+            isRoundOver = true;
         } else {
+            isRoundOver = hintCount === 5;
+
             setHintCount((hintCount) => {
                 if (hintCount < 5) {
                     return hintCount + 1;
@@ -64,16 +59,28 @@ function MovieGuessr() {
             setGuessIsWrong(true);
             setTimeout(() => {
                 setGuessIsWrong(false);
-            }, 700);
+            }, 600);
+        }
+
+        if (isRoundOver) {
+            setShowPopUp(true);
+            setWin(isCorrect);
         }
     };
 
-    if (loading) {
+    const handleEndRoundPopUpClick = () => {
+        setTotalPoints((totalPoints) => totalPoints + points);
+        setRoundNum((roundNum) => roundNum + 1);
+    };
+
+    if (!data) {
         return <p>Loading...</p>;
-    } else if (data) {
+    } else {
         return (
             <div className="movieguessr-container">
                 <h1>MovieGuessr</h1>
+
+                <h2 className="round-count">Round {roundNum}</h2>
 
                 <div className="stats-container">
                     <div className="hint-count-container">
@@ -107,12 +114,19 @@ function MovieGuessr() {
                         Submit Guess
                     </button>
                 </form>
-                
-                {showPopUp && <EndGamePopup win={win} imgPath={data.posterPath} title={data.title} />}
+
+                {showPopUp && (
+                    <EndRoundPopUp
+                        win={win}
+                        imgPath={data.posterPath}
+                        title={data.title}
+                        hintCount={hintCount}
+                        points={points}
+                        handleClick={handleEndRoundPopUpClick}
+                    />
+                )}
             </div>
         );
-    } else {
-        return <p>Movie not found</p>;
     }
 }
 
