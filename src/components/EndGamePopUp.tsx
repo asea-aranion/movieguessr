@@ -1,28 +1,13 @@
-import "./EndGamePopUp.css";
+import "./EndRoundPopUp.css";
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
-function EndGamePopup({
-    win,
-    imgPath,
-    title,
-	hintCount,
-	points
-}: {
-    win: boolean;
-    imgPath: string;
-    title: string;
-	hintCount: number;
-	points: number;
-}) {
+function EndGamePopUp({ points }: { points: number }) {
     const navigate = useNavigate();
 
     const handleButtonClick = () => {
         navigate("/");
     };
-
-    const imgSource = `https://image.tmdb.org/t/p/w200${imgPath}`;
-
     useEffect(() => {
         document.body.style.overflow = "hidden";
 
@@ -34,14 +19,17 @@ function EndGamePopup({
     return (
         <div className="overlay">
             <div className="popup-content">
-                <h2 className="popup-title">{win ? "Congratulations!" : "Better luck next time :("}</h2>
-				<p className="popup-text">You scored {points} points and used {hintCount} {hintCount === 1 ? "hint" : "hints"}.</p>
-                <img src={imgSource} />
-                <p className="popup-text">{ win ? "You guessed: " : "The answer was: "} {title}</p>
-                <button className="play-again-button" onClick={handleButtonClick}>Play again?</button>
+                <h2 className="popup-title">Game end!</h2>
+                <p className="popup-text">You scored {points} total points.</p>
+                <button
+                    className="play-again-button"
+                    onClick={handleButtonClick}
+                >
+                    Play again?
+                </button>
             </div>
         </div>
     );
 }
 
-export default EndGamePopup;
+export default EndGamePopUp;
