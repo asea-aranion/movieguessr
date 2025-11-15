@@ -52,6 +52,7 @@ function MovieGuessr() {
         if (verifyGuess()) {
             console.log("Correct Guess!")
             // TODO: need to prompt into starting a new game
+            
         } else {
             setHintCount(hintCount + 1)
             setPoints(points - 1000)
