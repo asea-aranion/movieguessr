@@ -9,7 +9,7 @@ function MovieGuessr() {
     const [data, setData] = useState<Movie | null>(null);
     const [loading, setLoading] = useState(true);
     const [showPopUp, setShowPopUp] = useState(false);
-
+    
     const [hintCount, setHintCount] = useState(1);
     const [guess, setGuess] = useState("");
     const [points, setPoints] = useState(5000);
