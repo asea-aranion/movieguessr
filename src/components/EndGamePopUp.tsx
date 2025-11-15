@@ -1,4 +1,5 @@
 import "./EndGamePopUp.css";
+import React, { useEffect } from 'react';
 import { useNavigate } from "react-router-dom";
 
 function EndGamePopup({ win, imgPath, title }: { win: boolean, imgPath: string, title: string }) {
@@ -9,6 +10,15 @@ function EndGamePopup({ win, imgPath, title }: { win: boolean, imgPath: string, 
     };
 
     const imgSource = `https://image.tmdb.org/t/p/w200${imgPath}`
+
+    useEffect(() => {
+        document.body.style.overflow = 'hidden';
+
+        return () => {
+            document.body.style.overflow = 'unset';
+        };
+    }, []);
+
 
     return (
         <div className="overlay">
