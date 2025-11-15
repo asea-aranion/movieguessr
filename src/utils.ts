@@ -58,9 +58,9 @@ export const getMovieData = async (id: string): Promise<Movie> => {
 
     const creditsJson = await creditsResponse.json();
 
-    const actors = creditsJson.cast.slice(0, 5).map((member) => member.name);
+    const actors = creditsJson.cast.slice(0, 5).map((member: { name: string; }) => member.name);
     const director = creditsJson.crew.find(
-        (member) => member.job === "Director"
+        (member: { job: string; }) => member.job === "Director"
     ).name;
 
     return {
