@@ -23,7 +23,6 @@ const MovieGuessrWrapper = () => {
 
         getMovieData()
             .then((movie) => {
-                console.log(movie);
                 setData(movie);
             })
             .catch((e) => {

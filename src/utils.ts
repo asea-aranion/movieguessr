@@ -24,7 +24,6 @@ export const getMovieData = async (): Promise<Movie> => {
     const json = await response.json();
     const numResults = json.results.length;
     const movie = json.results[Math.floor(Math.random() * numResults)];
-    console.log(movie);
 
     const tmdbID = movie.id;
     const title = movie.title;
