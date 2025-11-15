@@ -15,7 +15,7 @@ function MovieGuessr() {
     const [guess, setGuess] = useState("");
     const [points, setPoints] = useState(5000);
     const [win, setWin] = useState(false);
-	const [guessIsWrong, setGuessIsWrong] = useState(false);
+    const [guessIsWrong, setGuessIsWrong] = useState(false);
 
     useEffect(() => {
         const movieID = getRandomMovieID();
@@ -62,10 +62,10 @@ function MovieGuessr() {
                 }
             });
             setPoints((points) => points - 1000);
-			setGuessIsWrong(true);
-			setTimeout(() => {
-				setGuessIsWrong(false);
-			}, 700);
+            setGuessIsWrong(true);
+            setTimeout(() => {
+                setGuessIsWrong(false);
+            }, 700);
         }
     };
 
@@ -92,10 +92,12 @@ function MovieGuessr() {
                 <HintGrid hintCount={hintCount} movieData={data} />
                 <form className="guess-form">
                     <input
-                        className={"guess-input" + (guessIsWrong ? " wrong" : "")}
+                        className={
+                            "guess-input" + (guessIsWrong ? " wrong" : "")
+                        }
                         type="text"
                         value={guess}
-						placeholder="guess that movie!"
+                        placeholder="guess that movie!"
                         onChange={handleChange}
                     />
                     <button
