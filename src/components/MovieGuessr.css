@@ -52,6 +52,12 @@
     font-weight: bold;
 }
 
+@media screen and (max-width: 800px) {
+    .guess-input {
+        width: 80vw;
+    }
+}
+
 .guess-input:focus-visible {
     outline: none;
 }

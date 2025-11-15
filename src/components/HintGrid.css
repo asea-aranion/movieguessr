@@ -6,6 +6,12 @@
     margin: auto;
 }
 
+@media screen and (max-width: 800px) {
+    .hint-grid {
+        width: 90vw;
+    }
+}
+
 @keyframes fade-in {
     from {
         opacity: 0%;
