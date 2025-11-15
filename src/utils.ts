@@ -4,10 +4,13 @@ export const obscureTitle = (title: string) => {
     return title.replace(/[a-zA-Z0-9]/g, "_");
 };
 
+
 export const getMovieData = async (genreID: number): Promise<Movie> => {
+    const pageNum = Math.floor(Math.random() * 4) + 1;
+
     // fetch popular movies
     const response = await fetch(
-        `https://api.themoviedb.org/3/discover/movie?include_adult=false&include_video=false&language=en-US&page=1&sort_by=popularity.desc&vote_average.gte=6&vote_count.gte=1000&with_origin_country=US${genreID === 0 ? '': '&with_genres=' + genreID}&api_key=${import.meta.env.VITE_REACT_APP_API_KEY}`,
+        `https://api.themoviedb.org/3/discover/movie?include_adult=false&include_video=false&language=en-US&page=${pageNum}&sort_by=popularity.desc&vote_average.gte=6&vote_count.gte=1000&with_origin_country=US${genreID === 0 ? '': '&with_genres=' + genreID}&api_key=${import.meta.env.VITE_REACT_APP_API_KEY}`,
         {
             method: "GET",
             headers: {
@@ -55,6 +58,7 @@ export const getMovieData = async (genreID: number): Promise<Movie> => {
     ).name;
 
     return {
+        tmdbID,
         title,
         plotOverview,
         releaseYear,

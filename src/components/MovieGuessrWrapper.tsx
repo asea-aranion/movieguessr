@@ -24,13 +24,28 @@ const MovieGuessrWrapper = () => {
             return;
         }
 
-        getMovieData(Number(searchParams.get('genre')))
-            .then((movie) => {
-                setData(movie);
-            })
-            .catch((e) => {
+        const fetchUniqueMovie = async () => {
+            try {
+                let movie: Movie | null = null;
+
+                do {
+                    movie = await getMovieData();
+                    console.log(seenMovieIDsRef.current);
+                } while (
+                    movie &&
+                    seenMovieIDsRef.current.includes(movie.tmdbID)
+                );
+
+                if (movie) {
+                    seenMovieIDsRef.current.push(movie.tmdbID);
+                    setData(movie);
+                }
+            } catch (e) {
                 console.error(e);
-            });
+            }
+        };
+
+        fetchUniqueMovie();
     }, [roundNum]);
 
     return (
