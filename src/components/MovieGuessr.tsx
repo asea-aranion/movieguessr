@@ -1,6 +1,6 @@
 import "./MovieGuessr.css";
 import { useState, useEffect } from "react";
-import { getMovieData, getRandomMovieID } from "../utils";
+import { getMovieData } from "../utils";
 import type { Movie } from "../types";
 import HintGrid from "./HintGrid";
 import EndGamePopup from "./EndGamePopUp";
@@ -17,9 +17,7 @@ function MovieGuessr() {
     const [guessIsWrong, setGuessIsWrong] = useState(false);
 
     useEffect(() => {
-        const movieID = getRandomMovieID();
-
-        getMovieData(movieID)
+        getMovieData()
             .then((movie) => {
                 console.log(movie);
                 setData(movie);
@@ -107,8 +105,14 @@ function MovieGuessr() {
                         Submit Guess
                     </button>
                 </form>
-                
-                {showPopUp && <EndGamePopup win={win} imgPath={data.posterPath} title={data.title} />}
+
+                {showPopUp && (
+                    <EndGamePopup
+                        win={win}
+                        imgPath={data.posterPath}
+                        title={data.title}
+                    />
+                )}
             </div>
         );
     } else {

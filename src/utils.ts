@@ -1,34 +1,13 @@
 import type { Movie } from "./types";
 
-const movieIDs = [
-    "tt1312221", // frankenstein
-    "tt10676052", // f4
-    "tt14205554", // kpop demon hunters
-	"tt5950044", // superman
-	"tt0068646", // godfather
-	"tt0076759", // star wars
-	"tt0347149", // howl's moving castle
-	"tt9362722", // across the spiderverse
-	"tt1745960", // top gun maverick
-	"tt9603208", // mi
-	"tt0381061", // casino royale
-	"tt0240772", // ocean's eleven
-	"tt1517268", // barbie
-];
-
 export const obscureTitle = (title: string) => {
     return title.replace(/[a-zA-Z0-9]/g, "_");
 };
 
-export const getRandomMovieID = () => {
-    const randomIndex = Math.floor(Math.random() * movieIDs.length);
-
-    return movieIDs[randomIndex];
-};
-
-export const getMovieData = async (id: string): Promise<Movie> => {
+export const getMovieData = async (): Promise<Movie> => {
+    // fetch popular movies
     const response = await fetch(
-        `https://api.themoviedb.org/3/find/${id}?external_source=imdb_id&api_key=${import.meta.env.VITE_REACT_APP_API_KEY}`,
+        `https://api.themoviedb.org/3/discover/movie?include_adult=false&include_video=false&language=en-US&page=1&sort_by=popularity.desc&vote_average.gte=6&vote_count.gte=1000&with_origin_country=US&api_key=${import.meta.env.VITE_REACT_APP_API_KEY}`,
         {
             method: "GET",
             headers: {
@@ -38,18 +17,16 @@ export const getMovieData = async (id: string): Promise<Movie> => {
     );
 
     if (response.status !== 200) {
-        throw new Error("failed to fetch movie with IMDB ID " + id);
+        throw new Error("failed to fetch movies");
     }
 
+    // pick random movie
     const json = await response.json();
-    const movie = json.movie_results[0];
-
-    if (!movie) {
-        throw new Error("no results for movie with IMDB ID " + id);
-    }
+    const numResults = json.results.length;
+    const movie = json.results[Math.floor(Math.random() * numResults)];
+    console.log(movie);
 
     const tmdbID = movie.id;
-
     const title = movie.title;
     const plotOverview = movie.overview;
     const releaseYear = movie.release_date.substring(0, 4);
