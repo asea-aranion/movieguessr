@@ -3,7 +3,7 @@ import { useState, useEffect } from "react";
 import { getMovieData, getRandomMovieID } from "../utils";
 import type { Movie } from "../types";
 import HintGrid from "./HintGrid";
-import './EndGamePopup.css'
+import "./EndGamePopup.css";
 import EndGamePopup from "./EndGamePopUp";
 
 function MovieGuessr() {
@@ -12,8 +12,8 @@ function MovieGuessr() {
     const [error, setError] = useState(null);
     const [showPopUp, setShowPopUp] = useState(false);
 
-    const [hintCount, setHintCount] = useState(0);
-    const [guess, setGuess] = useState('')
+    const [hintCount, setHintCount] = useState(1);
+    const [guess, setGuess] = useState("");
     const [points, setPoints] = useState(5000);
     const [win, setWin] = useState(false);
 
@@ -44,24 +44,30 @@ function MovieGuessr() {
     // verify guess
     const verifyGuess = () => {
         // TODO: need to check if guess is close enough to answer
-        const dummyAns = "hello"
-        return guess.toLowerCase() === dummyAns.toLowerCase()
-    }
+        const dummyAns = "hello";
+        return guess.toLowerCase() === dummyAns.toLowerCase();
+    };
 
     // Handle form submission
     const submitGuess = (event: React.MouseEvent<HTMLButtonElement>) => {
-        event.preventDefault(); 
-        console.log('Form submitted:', guess);
-        const isCorrect = verifyGuess();  // checks if answer is correct
+        event.preventDefault();
+        console.log("Form submitted:", guess);
+        const isCorrect = verifyGuess(); // checks if answer is correct
         if (isCorrect || points == 0) {
             console.log("End game");
-            setShowPopUp(true)
+            setShowPopUp(true);
 
             if (isCorrect) {
-                setWin(true)
+                setWin(true);
             }
         } else {
-            setHintCount((hintCount) => hintCount + 1);
+            setHintCount((hintCount) => {
+                if (hintCount < 5) {
+                    return hintCount + 1;
+                } else {
+                    return hintCount;
+                }
+            });
             setPoints((points) => points - 1000);
         }
     };
@@ -103,10 +109,7 @@ function MovieGuessr() {
                     </button>
                 </form>
 
-                {showPopUp && (
-                    <EndGamePopup win={win} />
-                )}
-
+                {showPopUp && <EndGamePopup win={win} />}
             </div>
         );
     } else {
