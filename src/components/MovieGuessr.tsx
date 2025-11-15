@@ -62,17 +62,35 @@ function MovieGuessr() {
         return <p>Loading...</p>;
     } else if (data) {
         return (
-            <div>
+            <div className="movieguessr-container">
                 <h1>MovieGuessr</h1>
 
-                <h2>Hints used: {hintCount}</h2>
-
-                <h2>Points: {points}</h2>
+                <div className="stats-container">
+                    <div className="hint-count-container">
+                        <h6 className="hint-count">{hintCount}</h6>
+                        <p className="hint-count-text">
+                            {hintCount === 1 ? "hint" : "hints"} used
+                        </p>
+                    </div>
+                    <div className="point-count-container">
+                        <h6 className="point-count">{points}</h6>
+                        <p className="point-count-text">points</p>
+                    </div>
+                </div>
 
                 <HintGrid hintCount={hintCount} movieData={data} />
-                <form>
-                    <input type="text" value={guess} onChange={handleChange} />
-                    <button type="submit" onClick={submitGuess}>
+                <form className="guess-form">
+                    <input
+                        className="guess-input"
+                        type="text"
+                        value={guess}
+                        onChange={handleChange}
+                    />
+                    <button
+                        className="submit-button"
+                        type="submit"
+                        onClick={submitGuess}
+                    >
                         Submit Guess
                     </button>
                 </form>
