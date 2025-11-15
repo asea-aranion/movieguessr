@@ -1,5 +1,5 @@
 import "./Home.css";
-import { use, useState } from 'react';
+import { useState } from 'react';
 import DropDown from "./DropDown";
 import { getGenres } from "../utils";
 import { Link } from "react-router-dom";
