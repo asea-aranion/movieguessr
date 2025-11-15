@@ -2,9 +2,18 @@ import type { Movie } from "./types";
 
 const movieIDs = [
     "tt1312221", // frankenstein
-    "tt31227572", // predator: badlands
     "tt10676052", // f4
     "tt14205554", // kpop demon hunters
+	"tt5950044", // superman
+	"tt0068646", // godfather
+	"tt0076759", // star wars
+	"tt0347149", // howl's moving castle
+	"tt9362722", // across the spiderverse
+	"tt1745960", // top gun maverick
+	"tt9603208", // mi
+	"tt0381061", // casino royale
+	"tt0240772", // ocean's eleven
+	"tt1517268", // barbie
 ];
 
 export const obscureTitle = (title: string) => {
