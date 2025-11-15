@@ -1,8 +1,13 @@
-import React from 'react'
-
-
+import React from 'react';
+import { useNavigate } from 'react-router-dom';
 
 function EndGamePopup( {win} : {win: boolean} ) {
+
+    const navigate = useNavigate();
+
+    const handleButtonClick = () => {
+        navigate('/');
+    };
 
     return (
         <div className='overlay'>
@@ -12,7 +17,7 @@ function EndGamePopup( {win} : {win: boolean} ) {
                 ):(
                     "Better luck next time :("
                 )} </h2>
-                <button>Play again?</button>
+                <button onClick={ handleButtonClick }>Play again?</button>
             </div>
         </div>
     )
