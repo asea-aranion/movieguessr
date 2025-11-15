@@ -1,3 +1,4 @@
+import "./EndGamePopup.css";
 import { useNavigate } from "react-router-dom";
 
 function EndGamePopup({ win }: { win: boolean }) {

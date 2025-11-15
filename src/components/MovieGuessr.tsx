@@ -3,7 +3,6 @@ import { useState, useEffect } from "react";
 import { getMovieData, getRandomMovieID } from "../utils";
 import type { Movie } from "../types";
 import HintGrid from "./HintGrid";
-import "./EndGamePopup.css";
 import EndGamePopup from "./EndGamePopUp";
 
 function MovieGuessr() {
