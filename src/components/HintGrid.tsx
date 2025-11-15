@@ -1,5 +1,3 @@
-import React from 'react';
-
 // interface hintGridProp {
 //     hintCount: number;
 //     actorList: Array<string>;

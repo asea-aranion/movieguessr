@@ -9,6 +9,9 @@ function MovieGuessr() {
     const [error, setError] = useState(null);
 
     useEffect(() => {
+		console.log(data);
+		console.log(loading);
+		console.log(error);
         const movieID = getRandomMovieID();
 
         getMovieData(movieID)
