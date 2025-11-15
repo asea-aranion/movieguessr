@@ -16,6 +16,7 @@ function MovieGuessr() {
     const [guess, setGuess] = useState("");
     const [points, setPoints] = useState(5000);
     const [win, setWin] = useState(false);
+	const [guessIsWrong, setGuessIsWrong] = useState(false);
 
     useEffect(() => {
         console.log(data);
@@ -52,7 +53,7 @@ function MovieGuessr() {
         event.preventDefault();
         console.log("Form submitted:", guess);
         const isCorrect = verifyGuess(); // checks if answer is correct
-        if (isCorrect || points == 0) {
+        if (isCorrect || points <= 1000) {
             console.log("End game");
             setShowPopUp(true);
 
@@ -68,6 +69,10 @@ function MovieGuessr() {
                 }
             });
             setPoints((points) => points - 1000);
+			setGuessIsWrong(true);
+			setTimeout(() => {
+				setGuessIsWrong(false);
+			}, 700);
         }
     };
 
@@ -94,7 +99,7 @@ function MovieGuessr() {
                 <HintGrid hintCount={hintCount} movieData={data} />
                 <form className="guess-form">
                     <input
-                        className="guess-input"
+                        className={"guess-input" + (guessIsWrong ? " wrong" : "")}
                         type="text"
                         value={guess}
 						placeholder="guess that movie!"

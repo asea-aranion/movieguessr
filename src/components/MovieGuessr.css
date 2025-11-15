@@ -35,14 +35,14 @@
 }
 
 .guess-input {
-    border: none;
+    border: var(--border) 1px solid;
     font-family: inherit;
     font-size: 20px;
     border-radius: 2rem;
     padding: 0.7rem 1.2rem;
     width: 600px;
     text-align: center;
-    background-color: var(--textbox-background);
+	background-color: transparent;
     color: inherit;
     font-weight: bold;
 }
@@ -51,15 +51,33 @@
     outline: none;
 }
 
+.guess-input.wrong {
+	animation-name: buzz;
+	animation-duration: 1s;
+	animation-timing-function: ease;
+}
+
+@keyframes buzz {
+	0% {
+		border: var(--border) 1px solid;
+	}
+	50% {
+		border: var(--border-error) 1px solid;
+	}
+	100% {
+		border: var(--border) 1px solid;
+	}
+}
+
 .submit-button {
     border: var(--border) 1px solid;
     font-family: inherit;
     font-size: 20px;
     background-color: transparent;
     color: var(--border);
-    padding: 0.7rem 1.2rem;
+    padding: 0.4rem 1.2rem;
     border-radius: 2rem;
-    transition: background-color 0.3s ease;
+    transition: background-color 0.5s ease;
 }
 
 .submit-button:hover {
