@@ -44,8 +44,7 @@ function MovieGuessr() {
     // verify guess
     const verifyGuess = () => {
         // TODO: need to check if guess is close enough to answer
-        const dummyAns = "hello";
-        return guess.toLowerCase() === dummyAns.toLowerCase();
+        return guess.trim().toLowerCase() === data?.title.toLowerCase();
     };
 
     // Handle form submission
@@ -98,6 +97,7 @@ function MovieGuessr() {
                         className="guess-input"
                         type="text"
                         value={guess}
+						placeholder="guess that movie!"
                         onChange={handleChange}
                     />
                     <button
