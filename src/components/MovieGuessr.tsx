@@ -9,7 +9,6 @@ import EndGamePopup from "./EndGamePopUp";
 function MovieGuessr() {
     const [data, setData] = useState<Movie | null>(null);
     const [loading, setLoading] = useState(true);
-    const [error, setError] = useState(null);
     const [showPopUp, setShowPopUp] = useState(false);
 
     const [hintCount, setHintCount] = useState(1);
@@ -19,9 +18,6 @@ function MovieGuessr() {
 	const [guessIsWrong, setGuessIsWrong] = useState(false);
 
     useEffect(() => {
-        console.log(data);
-        console.log(loading);
-        console.log(error);
         const movieID = getRandomMovieID();
 
         getMovieData(movieID)
@@ -32,7 +28,6 @@ function MovieGuessr() {
             })
             .catch((e) => {
                 console.error(e);
-                setError(e);
                 setLoading(false);
             });
     }, []);
@@ -51,10 +46,8 @@ function MovieGuessr() {
     // Handle form submission
     const submitGuess = (event: React.MouseEvent<HTMLButtonElement>) => {
         event.preventDefault();
-        console.log("Form submitted:", guess);
         const isCorrect = verifyGuess(); // checks if answer is correct
         if (isCorrect || points <= 1000) {
-            console.log("End game");
             setShowPopUp(true);
 
             if (isCorrect) {
