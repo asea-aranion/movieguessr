@@ -1,18 +1,36 @@
-grid-container {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 10px;
+.hint-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1rem;
+    width: 800px;
+    margin: auto;
 }
-.grid-item {
-  position: relative; /* For positioning the handle */
-  overflow: auto;
+
+@keyframes fade-in {
+    from {
+        opacity: 0%;
+    }
+    to {
+        opacity: 100%;
+    }
 }
-.handle {
-  position: absolute;
-  width: 10px;
-  height: 100%;
-  right: 0;
-  top: 0;
-  cursor: col-resize;
-  background: red; /* For visibility */
+
+.hint {
+    background-color: var(--hint-background);
+    border: var(--border) 1px solid;
+    border-radius: 2rem;
+    display: flex;
+    flex-flow: column nowrap;
+    gap: 1rem;
+    padding: 1rem;
+    box-sizing: border-box;
+    width: 100%;
+    animation-name: fade-in;
+    animation-duration: 1s;
+    animation-timing-function: ease;
+}
+
+.hint-heading,
+.hint-text {
+    margin: 0;
 }
