@@ -18,9 +18,9 @@ function MovieGuessr() {
     const [win, setWin] = useState(false);
 
     useEffect(() => {
-		console.log(data);
-		console.log(loading);
-		console.log(error);
+        console.log(data);
+        console.log(loading);
+        console.log(error);
         const movieID = getRandomMovieID();
 
         getMovieData(movieID)
@@ -37,8 +37,8 @@ function MovieGuessr() {
     }, []);
 
     // Handle input changes
-    const handleChange = (event) => {
-        setGuess(event.target.content);
+    const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+        setGuess(event.target.value);
     };
 
     // verify guess
@@ -61,29 +61,34 @@ function MovieGuessr() {
                 setWin(true)
             }
         } else {
-            setHintCount(hintCount + 1);
-            setPoints(points - 1000);
+            setHintCount((hintCount) => hintCount + 1);
+            setPoints((points) => points - 1000);
         }
     };
 
-    return (
-        <div>
-            <h1>MovieGuessr</h1>
-            <HintGrid />
-            <p>Points: {points}</p>
-            <p>Hint Count: {hintCount}</p>
-            <form>
-                <input
-                    type="text"
-                    value={guess}
-                    onChange={handleChange}
-                />
-                <button type="submit" onClick={submitGuess}>Submit Guess</button>
-            </form>
+    if (loading) {
+        return <p>Loading...</p>;
+    } else if (data) {
+        return (
+            <div>
+                <h1>MovieGuessr</h1>
 
-            { showPopUp && <EndGamePopup win={win} />}
-        </div>
-    );
+                <h2>Hints used: {hintCount}</h2>
+
+                <h2>Points: {points}</h2>
+
+                <HintGrid hintCount={hintCount} movieData={data} />
+                <form>
+                    <input type="text" value={guess} onChange={handleChange} />
+                    <button type="submit" onClick={submitGuess}>
+                        Submit Guess
+                    </button>
+                </form>
+            </div>
+        );
+    } else {
+        return <p>Movie not found</p>;
+    }
 }
 
 export default MovieGuessr;
