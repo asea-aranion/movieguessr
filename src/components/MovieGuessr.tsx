@@ -1,46 +1,47 @@
-import './MovieGuessr.css'
-import React, { useState, useEffect } from 'react';
+import "./MovieGuessr.css";
+import { useState, useEffect } from "react";
+import { getRandomMovieID } from "./utils";
 
 function MovieGuessr() {
+  const [data, setData] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
 
-    const apiKey = import.meta.env.VITE_REACT_APP_API_KEY;
-    const baseURL = "https://api.themoviedb.org/3/discover/movie"
+  useEffect(() => {
+    const movieID = getRandomMovieID();
 
-    const [data, setData] = useState(null);
-    const [loading, setLoading] = useState(true);
-    const [error, setError] = useState(null);
-
-    useEffect(() => {
-        fetch(baseURL, {
-            method: 'GET',
-            headers: {
-                'Content-Type': 'application/json',
-                'Authorization': `Bearer: ${apiKey}`
-            }
-        })
-        .then(response => {
-            if (!response.ok) {
-                throw new Error(`HTTP error! status: ${response.status}`);
-            }
-            return response.json();
-        })
-        .then(json => {
-            setData(json);
-            setLoading(false);
-        })
-        .catch(error => {
-            setError(error);
-            setLoading(false);
-        });
-    }, [apiKey]);
-
-    return (
-        <div>
-            <h1>MovieGuessr</h1>
-            <p></p>
-        </div>
+    fetch(
+      `https://api.themoviedb.org/3/find/${movieID}?external_source=imdb_id&api_key=${import.meta.env.VITE_REACT_APP_API_KEY}`,
+      {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      },
     )
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        return response.json();
+      })
+      .then((json) => {
+        console.log(json);
+        setData(json);
+        setLoading(false);
+      })
+      .catch((error) => {
+        setError(error);
+        setLoading(false);
+      });
+  }, []);
+
+  return (
+    <div>
+      <h1>MovieGuessr</h1>
+      <p></p>
+    </div>
+  );
 }
 
 export default MovieGuessr;
-
