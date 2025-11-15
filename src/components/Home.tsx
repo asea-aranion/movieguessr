@@ -5,7 +5,7 @@ function Home() {
     return (
         <div>
             <h1>Home</h1>
-            <Link to="/MovieGuessr">Start playing!</Link>
+            <Link to="/MovieGuessr">Play MovieGuessr!</Link>
         </div>
     );
 }
