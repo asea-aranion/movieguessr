@@ -2,7 +2,7 @@ import "./Home.css";
 import { useState } from 'react';
 import DropDown from "./DropDown";
 import { getGenres } from "../utils";
-import { Link } from "react-router-dom";
+import { Link, createSearchParams } from "react-router-dom";
 
 export function Home() {
 
@@ -41,7 +41,10 @@ export function Home() {
                         />
                     )}
                 </button>
-                <Link to="/MovieGuessr">Start playing!</Link>
+                <Link to={{
+                    pathname: "/MovieGuessr",
+                    search: `?${createSearchParams({genre: String(selectGenreId)})}`
+                }}>Start playing!</Link>
             </div>
         </div>
     );
