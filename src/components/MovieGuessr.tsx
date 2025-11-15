@@ -49,7 +49,7 @@ function MovieGuessr() {
     }
 
     // Handle form submission
-    const submitGuess = (event) => {
+    const submitGuess = (event: React.MouseEvent<HTMLButtonElement>) => {
         event.preventDefault(); 
         console.log('Form submitted:', guess);
         const isCorrect = verifyGuess();  // checks if answer is correct
@@ -84,6 +84,11 @@ function MovieGuessr() {
                         Submit Guess
                     </button>
                 </form>
+
+                {showPopUp && (
+                    <EndGamePopup win={win} />
+                )}
+
             </div>
         );
     } else {

@@ -2,7 +2,7 @@ import React from 'react'
 
 
 
-function EndGamePopup( win: boolean ) {
+function EndGamePopup( {win} : {win: boolean} ) {
 
     return (
         <div className='overlay'>
@@ -12,6 +12,7 @@ function EndGamePopup( win: boolean ) {
                 ):(
                     "Better luck next time :("
                 )} </h2>
+                <button>Play again?</button>
             </div>
         </div>
     )
