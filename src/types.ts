@@ -1,4 +1,5 @@
 export interface Movie {
+    tmdbID: number;
     title: string;
     actors: string[];
     director: string;

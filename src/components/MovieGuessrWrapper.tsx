@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import { getMovieData } from "../utils";
 import MovieGuessr from "./MovieGuessr";
 import EndGamePopUp from "./EndGamePopUp";
@@ -9,8 +9,7 @@ const MovieGuessrWrapper = () => {
     const [roundNum, setRoundNum] = useState(1);
     const [showingPopUp, setShowingPopUp] = useState(false);
     const [data, setData] = useState<Movie | null>(null);
-
-    useEffect(() => {}, [roundNum]);
+    const seenMovieIDsRef = useRef<number[]>([]);
 
     useEffect(() => {
         // eslint-disable-next-line react-hooks/set-state-in-effect
@@ -21,13 +20,28 @@ const MovieGuessrWrapper = () => {
             return;
         }
 
-        getMovieData()
-            .then((movie) => {
-                setData(movie);
-            })
-            .catch((e) => {
+        const fetchUniqueMovie = async () => {
+            try {
+                let movie: Movie | null = null;
+
+                do {
+                    movie = await getMovieData();
+                    console.log(seenMovieIDsRef.current);
+                } while (
+                    movie &&
+                    seenMovieIDsRef.current.includes(movie.tmdbID)
+                );
+
+                if (movie) {
+                    seenMovieIDsRef.current.push(movie.tmdbID);
+                    setData(movie);
+                }
+            } catch (e) {
                 console.error(e);
-            });
+            }
+        };
+
+        fetchUniqueMovie();
     }, [roundNum]);
 
     return (
