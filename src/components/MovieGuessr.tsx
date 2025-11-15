@@ -40,13 +40,13 @@ function MovieGuessr({
     const submitGuess = (event: React.MouseEvent<HTMLButtonElement>) => {
         event.preventDefault();
         const isCorrect = verifyGuess();
-		let isRoundOver = false;
-		
+        let isRoundOver = false;
+
         if (isCorrect) {
             setWin(true);
-			isRoundOver = true;
+            isRoundOver = true;
         } else {
-			isRoundOver = hintCount === 5;
+            isRoundOver = hintCount === 5;
 
             setHintCount((hintCount) => {
                 if (hintCount < 5) {
@@ -62,10 +62,10 @@ function MovieGuessr({
             }, 600);
         }
 
-		if (isRoundOver) {
-			setShowPopUp(true);
-			setWin(isCorrect);
-		}
+        if (isRoundOver) {
+            setShowPopUp(true);
+            setWin(isCorrect);
+        }
     };
 
     const handleEndRoundPopUpClick = () => {

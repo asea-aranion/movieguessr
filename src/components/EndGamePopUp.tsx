@@ -21,7 +21,7 @@ function EndGamePopUp({ points }: { points: number }) {
             <div className="popup-content">
                 <h2 className="popup-title">Game end!</h2>
                 <p className="popup-text">You scored {points} total points.</p>
-				{/* TODO - leaderboard entry goes here */}
+                {/* TODO - leaderboard entry goes here */}
                 <button
                     className="play-again-button"
                     onClick={handleButtonClick}
