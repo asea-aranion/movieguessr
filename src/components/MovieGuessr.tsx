@@ -107,8 +107,8 @@ function MovieGuessr() {
                         Submit Guess
                     </button>
                 </form>
-
-                {showPopUp && <EndGamePopup win={win} />}
+                
+                {showPopUp && <EndGamePopup win={win} imgPath={data.posterPath} title={data.title} />}
             </div>
         );
     } else {
