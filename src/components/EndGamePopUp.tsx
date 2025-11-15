@@ -6,10 +6,14 @@ function EndGamePopup({
     win,
     imgPath,
     title,
+	hintCount,
+	points
 }: {
     win: boolean;
     imgPath: string;
     title: string;
+	hintCount: number;
+	points: number;
 }) {
     const navigate = useNavigate();
 
@@ -30,10 +34,11 @@ function EndGamePopup({
     return (
         <div className="overlay">
             <div className="popup-content">
-                <h2>{win ? "Congratulations!" : "Better luck next time :("}</h2>
+                <h2 className="popup-title">{win ? "Congratulations!" : "Better luck next time :("}</h2>
+				<p className="popup-text">You scored {points} points and used {hintCount} {hintCount === 1 ? "hint" : "hints"}.</p>
                 <img src={imgSource} />
-                <p>{title}</p>
-                <button onClick={handleButtonClick}>Play again?</button>
+                <p className="popup-text">{ win ? "You guessed: " : "The answer was: "} {title}</p>
+                <button className="play-again-button" onClick={handleButtonClick}>Play again?</button>
             </div>
         </div>
     );
