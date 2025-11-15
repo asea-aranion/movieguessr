@@ -1,43 +1,25 @@
 import "./MovieGuessr.css";
 import { useState, useEffect } from "react";
-import { getRandomMovieID } from "./utils";
+import { getMovieData, getRandomMovieID } from "../utils";
+import type { Movie } from "../types";
 
 function MovieGuessr() {
-    const [data, setData] = useState(null);
+    const [data, setData] = useState<Movie | null>(null);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
 
     useEffect(() => {
         const movieID = getRandomMovieID();
 
-        fetch(
-            `https://api.themoviedb.org/3/find/${movieID}?external_source=imdb_id&api_key=${import.meta.env.VITE_REACT_APP_API_KEY}`,
-            {
-                method: "GET",
-                headers: {
-                    "Content-Type": "application/json",
-                },
-            }
-        )
-            .then((response) => {
-                if (!response.ok) {
-                    throw new Error(`HTTP error! status: ${response.status}`);
-                }
-                return response.json();
+        getMovieData(movieID)
+            .then((movie) => {
+                console.log(movie);
+                setData(movie);
+                setLoading(false);
             })
-            .then((json) => {
-                const movie = json.movie_results[0];
-
-                if (movie) {
-                    console.log(movie);
-                    setData(movie);
-                    setLoading(false);
-                } else {
-                    throw new Error("no results for ID " + movieID);
-                }
-            })
-            .catch((error) => {
-                setError(error);
+            .catch((e) => {
+                console.error(e);
+                setError(e);
                 setLoading(false);
             });
     }, []);
