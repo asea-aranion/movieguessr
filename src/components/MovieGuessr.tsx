@@ -2,16 +2,20 @@ import "./MovieGuessr.css";
 import { useState, useEffect } from "react";
 import { getMovieData, getRandomMovieID } from "../utils";
 import type { Movie } from "../types";
-import HintGrid from "./HintGrid"
+import HintGrid from "./HintGrid";
+import './EndGamePopup.css'
+import EndGamePopup from "./EndGamePopUp";
 
 function MovieGuessr() {
     const [data, setData] = useState<Movie | null>(null);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
+    const [showPopUp, setShowPopUp] = useState(false);
 
-    const [hintCount, setHintCount] = useState(0)
+    const [hintCount, setHintCount] = useState(0);
     const [guess, setGuess] = useState('')
-    const [points, setPoints] = useState(5000)
+    const [points, setPoints] = useState(5000);
+    const [win, setWin] = useState(false);
 
     useEffect(() => {
 		console.log(data);
@@ -37,25 +41,28 @@ function MovieGuessr() {
         setGuess(event.target.content);
     };
 
-    /**
-     * @returns whether the guess matches the answer
-     */
+    // verify guess
     const verifyGuess = () => {
         // TODO: need to check if guess is close enough to answer
-        return guess.toLowerCase() === guess.toLowerCase()
+        const dummyAns = "hello"
+        return guess.toLowerCase() === dummyAns.toLowerCase()
     }
 
     // Handle form submission
     const submitGuess = (event) => {
-        event.preventDefault(); // Prevent default browser form submission
+        event.preventDefault(); 
         console.log('Form submitted:', guess);
-        if (verifyGuess()) {
-            console.log("Correct Guess!")
-            // TODO: need to prompt into starting a new game
-            
+        const isCorrect = verifyGuess();  // checks if answer is correct
+        if (isCorrect || points == 0) {
+            console.log("End game");
+            setShowPopUp(true)
+
+            if (isCorrect) {
+                setWin(true)
+            }
         } else {
-            setHintCount(hintCount + 1)
-            setPoints(points - 1000)
+            setHintCount(hintCount + 1);
+            setPoints(points - 1000);
         }
     };
 
@@ -73,6 +80,8 @@ function MovieGuessr() {
                 />
                 <button type="submit" onClick={submitGuess}>Submit Guess</button>
             </form>
+
+            { showPopUp && <EndGamePopup win={win} />}
         </div>
     );
 }
