@@ -14,7 +14,7 @@ function EndGamePopup({ win, imgPath, title }: { win: boolean, imgPath: string, 
         <div className="overlay">
             <div className="popup-content">
                 <h2>
-                    {win ? "Congratulations!" : "Better luck next time :("}{" "}
+                    { win ? "Congratulations!" : "Better luck next time :(" }
                 </h2>
                 <img src={imgSource} />
                 <p>{title}</p>
