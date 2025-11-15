@@ -41,7 +41,7 @@ function EndRoundPopUp({
                     {win ? "You guessed: " : "The answer was: "} {title}
                 </p>
                 <button className="play-again-button" onClick={handleClick}>
-                    Play again?
+                    Next Round
                 </button>
             </div>
         </div>

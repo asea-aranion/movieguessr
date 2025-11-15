@@ -39,15 +39,15 @@ function MovieGuessr({
     // Handle form submission
     const submitGuess = (event: React.MouseEvent<HTMLButtonElement>) => {
         event.preventDefault();
-        const isCorrect = verifyGuess(); // checks if answer is correct
-        if (isCorrect || points <= 1000) {
-            setShowPopUp(true);
-            setGuess("");
-
-            if (isCorrect) {
-                setWin(true);
-            }
+        const isCorrect = verifyGuess();
+		let isRoundOver = false;
+		
+        if (isCorrect) {
+            setWin(true);
+			isRoundOver = true;
         } else {
+			isRoundOver = hintCount === 5;
+
             setHintCount((hintCount) => {
                 if (hintCount < 5) {
                     return hintCount + 1;
@@ -61,11 +61,14 @@ function MovieGuessr({
                 setGuessIsWrong(false);
             }, 600);
         }
+
+		if (isRoundOver) {
+			setShowPopUp(true);
+			setWin(isCorrect);
+		}
     };
 
     const handleEndRoundPopUpClick = () => {
-        setShowPopUp(false);
-        setWin(false);
         setTotalPoints((totalPoints) => totalPoints + points);
         setRoundNum((roundNum) => roundNum + 1);
     };
