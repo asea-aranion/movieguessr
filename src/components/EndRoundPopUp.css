@@ -1,3 +1,12 @@
+@keyframes fade-in {
+    from {
+        opacity: 0%;
+    }
+    to {
+        opacity: 100%;
+    }
+}
+
 .popup-content {
     position: fixed;
     top: 50vh;
@@ -17,6 +26,9 @@
     padding: 1rem 0;
     box-sizing: border-box;
     border: var(--border) 1px solid;
+	animation-name: fade-in;
+	animation-duration: 0.5s;
+	animation-timing-function: ease;
 }
 
 .overlay {
@@ -27,6 +39,9 @@
     left: 0;
     background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent background */
     z-index: 2;
+	animation-name: fade-in;
+	animation-duration: 0.5s;
+	animation-timing-function: ease;
 }
 
 .popup-title {
