@@ -12,27 +12,24 @@ import type { Movie } from "./types";
 import { db } from "./firebaseConfig";
 import { GoogleGenAI } from "@google/genai";
 
-export const getProphecy = async (
-    prompt: string
-): Promise<string> => {
-    const geminiApiKey = import.meta.env.VITE_REACT_APP_GEMINI_API_KEY; 
-    const ai = new GoogleGenAI({apiKey: geminiApiKey});
-    
+export const getProphecy = async (prompt: string): Promise<string> => {
+    const geminiApiKey = import.meta.env.VITE_REACT_APP_GEMINI_API_KEY;
+    const ai = new GoogleGenAI({ apiKey: geminiApiKey });
+
     const response = await ai.models.generateContent({
-        model: 'gemini-2.5-flash',
+        model: "gemini-2.5-flash",
         contents: prompt,
         config: {
             thinkingConfig: {
                 thinkingBudget: 0, // Disables thinking
             },
-        }
-    })
+        },
+    });
 
-    console.log(response)
+    console.log(response);
 
     return String(response.text);
-}
-
+};
 
 export const obscureTitle = (title: string) => {
     return title.replace(/[a-zA-Z0-9]/g, "_");

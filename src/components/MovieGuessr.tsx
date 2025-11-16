@@ -128,7 +128,11 @@ function MovieGuessr({
                 )}
 
                 <div className="crystal-ball-container">
-                    <CrystalBall guess={guess} movie={data.title} hint={hintCount} />
+                    <CrystalBall
+                        guess={guess}
+                        movie={data.title}
+                        hint={hintCount}
+                    />
                 </div>
             </div>
         );
