@@ -26,7 +26,9 @@ export function Home() {
         <>
             <div className="home-body-container">
                 <h1>Welcome to MovieGuessr!</h1>
-                <p className="category-direction">Choose a category to compete in:</p>
+                <p className="category-direction">
+                    Choose a category to compete in:
+                </p>
                 <button
                     className={showDropDown ? "active" : undefined}
                     onClick={(): void => toggleDropDown()}
@@ -34,9 +36,7 @@ export function Home() {
                         dismissHandler(e)
                     }
                 >
-                    <div>
-                        {selectGenreName}
-                    </div>
+                    <div>{selectGenreName}</div>
                     {showDropDown && (
                         <DropDown
                             options={listOfGenres}
