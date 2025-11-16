@@ -11,6 +11,7 @@ interface MovieGuessrProps {
     roundNum: number;
     setRoundNum: React.Dispatch<React.SetStateAction<number>>;
     data: Movie;
+    genreID: number;
 }
 
 function MovieGuessr({
@@ -18,6 +19,7 @@ function MovieGuessr({
     roundNum,
     setRoundNum,
     data,
+    genreID
 }: MovieGuessrProps) {
     const [showPopUp, setShowPopUp] = useState(false);
     const [prophecy, setProphecy] = useState("");
@@ -107,7 +109,7 @@ function MovieGuessr({
     } else {
         return (
             <div className="movieguessr-container">
-                <h1>MovieGuessr</h1>
+                <h1 className={genreID === 27 ? "spooky-title": ""}>MovieGuessr</h1>
 
                 <h2 className="round-count">Round {roundNum}</h2>
 

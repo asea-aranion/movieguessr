@@ -64,6 +64,7 @@ const MovieGuessrWrapper = () => {
                     roundNum={roundNum}
                     setRoundNum={setRoundNum}
                     data={data}
+                    genreID={Number(searchParams.get("genre_id"))}
                 ></MovieGuessr>
             )}
         </>
