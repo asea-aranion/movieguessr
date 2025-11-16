@@ -1,14 +1,13 @@
 import "./Home.css";
 import { useState } from "react";
 import DropDown from "./DropDown";
-import { getGenres } from "../utils";
+import { genres } from "../utils";
 import { Link, createSearchParams } from "react-router-dom";
 
 export function Home() {
     const [showDropDown, setShowDropDown] = useState(false);
     const [selectGenreId, setSelectGenreId] = useState(0);
     const [selectGenreName, setSelectGenreName] = useState("Any Category");
-    const listOfGenres = getGenres();
 
     const toggleDropDown = () => {
         setShowDropDown(!showDropDown);
@@ -26,7 +25,9 @@ export function Home() {
         <>
             <div className="home-body-container">
                 <h1>Welcome to MovieGuessr!</h1>
-                <p className="category-direction">Choose a category to compete in:</p>
+                <p className="category-direction">
+                    Choose a category to compete in:
+                </p>
                 <button
                     className={showDropDown ? "active" : undefined}
                     onClick={(): void => toggleDropDown()}
@@ -34,12 +35,10 @@ export function Home() {
                         dismissHandler(e)
                     }
                 >
-                    <div>
-                        {selectGenreName}
-                    </div>
+                    <div>{selectGenreName}</div>
                     {showDropDown && (
                         <DropDown
-                            options={listOfGenres}
+                            options={genres}
                             setGenreId={setSelectGenreId}
                             setGenreName={setSelectGenreName}
                         />

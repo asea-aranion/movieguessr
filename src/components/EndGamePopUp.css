@@ -39,7 +39,32 @@
     font-size: 20px;
 }
 
-.play-again-button {
+.username-label {
+    margin: 0;
+    font-size: 20px;
+}
+
+.username-input {
+    border: var(--border) 1px solid;
+    font-family: inherit;
+    font-size: 20px;
+    border-radius: 2rem;
+    padding: 0.7rem 1.2rem;
+    width: 80%;
+    text-align: center;
+    background-color: transparent;
+    color: inherit;
+}
+
+.username-input:focus-visible {
+    outline: none;
+}
+
+.popup-error {
+    color: var(--border-error);
+}
+
+.popup-button {
     border: var(--border) 1px solid;
     font-family: inherit;
     font-size: 20px;
@@ -50,7 +75,7 @@
     transition: background-color 0.5s ease;
 }
 
-.play-again-button:hover {
+.popup-button:hover {
     background-color: var(--border);
     color: var(--background);
 }
