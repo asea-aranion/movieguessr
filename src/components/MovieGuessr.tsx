@@ -59,7 +59,10 @@ function MovieGuessr({
         fetchReponse();
 
         // TODO: need to check if guess is close enough to answer
-        return guess.trim().toLowerCase() === data?.title.toLowerCase() || prophecy.toLowerCase() === "true";
+        return (
+            guess.trim().toLowerCase() === data?.title.toLowerCase() ||
+            prophecy.toLowerCase() === "true"
+        );
     };
 
     // Handle form submission
@@ -153,7 +156,7 @@ function MovieGuessr({
                 )}
 
                 <div className="crystal-ball-container">
-                    <CrystalBall prophecy = {prophecy} />
+                    <CrystalBall prophecy={prophecy} />
                 </div>
             </div>
         );
