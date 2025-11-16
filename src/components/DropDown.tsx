@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import "./Dropdown.css"; // For styling
+import "./DropDown.css"; // For styling
 
 const Dropdown = ({
     options,
