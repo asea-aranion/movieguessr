@@ -1,5 +1,5 @@
-import crystalBall from "../assets/animated-crystal-ball.png"
-import './CrystallBall.css'
+import crystalBall from "../assets/animated-crystal-ball.png";
+import "./CrystallBall.css";
 
 function CrystalBall({ prophecy }: { prophecy: string }) {
     return (
