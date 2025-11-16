@@ -3,6 +3,7 @@ import { useState } from "react";
 import type { Movie } from "../types";
 import HintGrid from "./HintGrid";
 import EndRoundPopUp from "./EndRoundPopUp";
+import CrystalBall from "./CrystalBall";
 
 interface MovieGuessrProps {
     setTotalPoints: React.Dispatch<React.SetStateAction<number>>;
@@ -125,6 +126,14 @@ function MovieGuessr({
                         handleClick={handleEndRoundPopUpClick}
                     />
                 )}
+
+                <div className="crystal-ball-container">
+                    <CrystalBall
+                        guess={guess}
+                        movie={data.title}
+                        hint={hintCount}
+                    />
+                </div>
             </div>
         );
     }
