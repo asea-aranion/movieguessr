@@ -60,10 +60,15 @@ const LeaderboardsPage = () => {
             </button>
             {loading ? (
                 <p className="leaderboard-text">Loading...</p>
-            ) : leaderboard.length === 0 ? (<>
-                <p className="leaderboard-text">No scores yet.</p>
-				<Link to={`/MovieGuessr/?genre_id=${genre}&genre_name=${getGenreName(genre)}`}>Be the first!</Link>
-				</>
+            ) : leaderboard.length === 0 ? (
+                <>
+                    <p className="leaderboard-text">No scores yet.</p>
+                    <Link
+                        to={`/MovieGuessr/?genre_id=${genre}&genre_name=${getGenreName(genre)}`}
+                    >
+                        Be the first!
+                    </Link>
+                </>
             ) : (
                 leaderboard.map((score) => (
                     <div
