@@ -1,0 +1,17 @@
+.leaderboards-cont {
+	display: flex;
+	flex-flow: column nowrap;
+	gap: 1.5rem;
+	align-items: center;
+}
+
+.leaderboard-card {
+	display: flex;
+	flex-flow: row nowrap;
+}
+
+.leaderboard-dropdown {
+	width: 400px;
+	position: relative;
+	left: auto;
+}

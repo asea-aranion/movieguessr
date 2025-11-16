@@ -1,22 +1,50 @@
 import { useEffect, useState } from "react";
 import "./LeaderboardsPage.css";
 import type { LeaderboardScore, LeaderboardDateRange } from "../types";
-import { getLeaderboard } from "../utils";
+import { genres, getLeaderboard, getPlaceString } from "../utils";
+import DropDown from "./DropDown";
 
 const LeaderboardsPage = () => {
     const [dateRange, setDateRange] = useState<LeaderboardDateRange>("all");
+	const [showDropdown, setShowDropdown] = useState(false);
     const [genre, setGenre] = useState(0);
     const [leaderboard, setLeaderboard] = useState<LeaderboardScore[]>([]);
 
+	const dismissHandler = (
+        event: React.FocusEvent<HTMLButtonElement>
+    ): void => {
+        if (event.currentTarget === event.target) {
+            setShowDropdown(false);
+        }
+    };
+
     useEffect(() => {
         getLeaderboard(genre, dateRange).then((data) => setLeaderboard(data));
+		console.log(dateRange)
     }, [genre, dateRange]);
 
     return (
         <div className="leaderboards-cont">
+			<h1>Leaderboards</h1>
+			<button
+                    className={showDropdown ? "menu active leaderboard-dropdown" : "menu leaderboard-dropdown"}
+                    onClick={() => setShowDropdown(value => !value)}
+                    onBlur={(e: React.FocusEvent<HTMLButtonElement>): void =>
+                        dismissHandler(e)
+                    }
+                >
+                    <div>{genres.find(element => element.id === genre)?.name || ""}</div>
+                    {showDropdown && (
+                        <DropDown
+                            options={genres}
+                            setGenreId={setGenre}
+                            setGenreName={() => {}}
+                        />
+                    )}
+                </button>
             {leaderboard.map((score) => (
-                <div>
-                    <p>{score.position}</p>
+                <div className="leaderboard-card">
+                    <p className="leaderboard-position">{getPlaceString(score.position)}</p>
                     <p>{score.username}</p>
                     <p>{score.score}</p>
                 </div>
