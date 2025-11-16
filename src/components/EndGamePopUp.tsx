@@ -74,7 +74,12 @@ function EndGamePopUp({ points, genre }: { points: number; genre: number }) {
                         {getGenreName(genre)} leaderboard.
                     </p>
                 )}
-				<button className="popup-button" onClick={() => navigate(`/Leaderboards?genre=${genre}`)}>View Leaderboard</button>
+                <button
+                    className="popup-button"
+                    onClick={() => navigate(`/Leaderboards?genre=${genre}`)}
+                >
+                    View Leaderboard
+                </button>
                 <button className="popup-button" onClick={handleButtonClick}>
                     Back to Home
                 </button>
