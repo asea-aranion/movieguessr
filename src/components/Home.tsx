@@ -29,7 +29,7 @@ export function Home() {
                     Choose a category to compete in:
                 </p>
                 <button
-                    className={showDropDown ? "active" : undefined}
+                    className={showDropDown ? "menu active" : "menu"}
                     onClick={(): void => toggleDropDown()}
                     onBlur={(e: React.FocusEvent<HTMLButtonElement>): void =>
                         dismissHandler(e)
