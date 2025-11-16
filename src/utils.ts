@@ -3,12 +3,15 @@ import {
     doc,
     getCountFromServer,
     getDoc,
+    getDocs,
+    orderBy,
     query,
     serverTimestamp,
     setDoc,
+    Timestamp,
     where,
 } from "firebase/firestore";
-import type { Movie } from "./types";
+import type { LeaderboardDateRange, LeaderboardScore, Movie } from "./types";
 import { db } from "./firebaseConfig";
 import { GoogleGenAI } from "@google/genai";
 
@@ -216,7 +219,6 @@ export const saveScore = async (
     );
 
     const placeSnap = await getCountFromServer(q);
-    console.log(placeSnap.data());
 
     return {
         place: placeSnap.data().count,
@@ -233,4 +235,55 @@ export const getPlaceString = (place: number) => {
     } else {
         return place + "th";
     }
+};
+
+const getDayStart = () => {
+    const result = new Date();
+    result.setHours(0, 0, 0, 0);
+    return result;
+};
+
+const getMonthStart = () => {
+    const result = new Date();
+    result.setDate(1);
+    result.setHours(0, 0, 0, 0);
+    return result;
+};
+
+export const getLeaderboard = async (
+    genre: number,
+    dateRange: LeaderboardDateRange
+): Promise<LeaderboardScore[]> => {
+    const q =
+        dateRange === "all"
+            ? query(
+                  collection(db, `leaderboards/${genre}/leaderboard`),
+                  orderBy("score", "desc")
+              )
+            : dateRange === "day"
+              ? query(
+                    collection(db, `leaderboards/${genre}/leaderboard`),
+                    orderBy("score", "desc"),
+                    where("time", ">=", Timestamp.fromDate(getDayStart()))
+                )
+              : query(
+                    collection(db, `leaderboards/${genre}/leaderboard`),
+                    orderBy("score", "desc"),
+                    where("time", ">=", Timestamp.fromDate(getMonthStart()))
+                );
+
+    const snap = await getDocs(q);
+
+    let i = 0;
+    const leaderboard = snap.docs.map((doc) => {
+        const data = doc.data();
+        i++;
+        return {
+            username: doc.id,
+            score: data.score,
+            position: i,
+        };
+    });
+
+    return leaderboard;
 };
