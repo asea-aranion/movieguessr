@@ -1,4 +1,5 @@
 import { useEffect, useState, useRef } from "react";
+import { useSearchParams } from "react-router-dom";
 import { getMovieData } from "../utils";
 import MovieGuessr from "./MovieGuessr";
 import EndGamePopUp from "./EndGamePopUp";
@@ -9,6 +10,8 @@ const MovieGuessrWrapper = () => {
     const [roundNum, setRoundNum] = useState(1);
     const [showingPopUp, setShowingPopUp] = useState(false);
     const [data, setData] = useState<Movie | null>(null);
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    const [searchParams, _] = useSearchParams();
     const seenMovieIDsRef = useRef<number[]>([]);
 
     useEffect(() => {
@@ -25,7 +28,9 @@ const MovieGuessrWrapper = () => {
                 let movie: Movie | null = null;
 
                 do {
-                    movie = await getMovieData();
+                    movie = await getMovieData(
+                        Number(searchParams.get("genre"))
+                    );
                     console.log(seenMovieIDsRef.current);
                 } while (
                     movie &&

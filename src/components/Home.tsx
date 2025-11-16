@@ -1,11 +1,60 @@
 import "./Home.css";
-import { Link } from "react-router-dom";
+import { useState } from "react";
+import DropDown from "./DropDown";
+import { getGenres } from "../utils";
+import { Link, createSearchParams } from "react-router-dom";
 
-function Home() {
+export function Home() {
+    const [showDropDown, setShowDropDown] = useState(false);
+    const [selectGenreId, setSelectGenreId] = useState(0);
+    const [selectGenreName, setSelectGenreName] = useState("");
+    const listOfGenres = getGenres();
+
+    const toggleDropDown = () => {
+        setShowDropDown(!showDropDown);
+    };
+
+    const dismissHandler = (
+        event: React.FocusEvent<HTMLButtonElement>
+    ): void => {
+        if (event.currentTarget === event.target) {
+            setShowDropDown(false);
+        }
+    };
+
     return (
         <div>
             <h1>Home</h1>
-            <Link to="/MovieGuessr">Play MovieGuessr!</Link>
+            <div className="home-body-container">
+                <button
+                    className={showDropDown ? "active" : undefined}
+                    onClick={(): void => toggleDropDown()}
+                    onBlur={(e: React.FocusEvent<HTMLButtonElement>): void =>
+                        dismissHandler(e)
+                    }
+                >
+                    <div>
+                        {selectGenreName
+                            ? "Select: " + selectGenreName
+                            : "Select ..."}{" "}
+                    </div>
+                    {showDropDown && (
+                        <DropDown
+                            options={listOfGenres}
+                            setGenreId={setSelectGenreId}
+                            setGenreName={setSelectGenreName}
+                        />
+                    )}
+                </button>
+                <Link
+                    to={{
+                        pathname: "/MovieGuessr",
+                        search: `?${createSearchParams({ genre: String(selectGenreId) })}`,
+                    }}
+                >
+                    Start playing!
+                </Link>
+            </div>
         </div>
     );
 }

@@ -2,3 +2,7 @@ a {
     color: var(--border);
     font-size: 24px;
 }
+.home-body-container {
+    display: flex;
+    flex-direction: column;
+}
