@@ -55,7 +55,7 @@ const MovieGuessrWrapper = () => {
             {showingPopUp && (
                 <EndGamePopUp
                     points={totalPoints}
-                    genre={Number(searchParams.get("genre"))}
+                    genre={Number(searchParams.get("genre_id"))}
                 ></EndGamePopUp>
             )}
             {data && (
