@@ -1,13 +1,14 @@
 import { useEffect, useState } from "react";
 import "./LeaderboardsPage.css";
 import type { LeaderboardScore, LeaderboardDateRange } from "../types";
-import { genres, getLeaderboard, getPlaceString } from "../utils";
+import { genres, getGenreName, getLeaderboard, getPlaceString } from "../utils";
 import DropDown from "./DropDown";
-import { useSearchParams } from "react-router-dom";
+import { Link, useSearchParams } from "react-router-dom";
 
 const LeaderboardsPage = () => {
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const [dateRange, _] = useState<LeaderboardDateRange>("all");
+    const [loading, setLoading] = useState(false);
     const [showDropdown, setShowDropdown] = useState(false);
     const paramsResult = useSearchParams();
     const [genre, setGenre] = useState(
@@ -24,7 +25,12 @@ const LeaderboardsPage = () => {
     };
 
     useEffect(() => {
-        getLeaderboard(genre, dateRange).then((data) => setLeaderboard(data));
+        // eslint-disable-next-line react-hooks/set-state-in-effect
+        setLoading(true);
+        getLeaderboard(genre, dateRange).then((data) => {
+            setLeaderboard(data);
+            setLoading(false);
+        });
     }, [genre, dateRange]);
 
     return (
@@ -52,15 +58,28 @@ const LeaderboardsPage = () => {
                     />
                 )}
             </button>
-            {leaderboard.map((score) => (
-                <div className="leaderboard-card">
-                    <p className="card-text leaderboard-position">
-                        {getPlaceString(score.position)}
-                    </p>
-                    <p className="card-text">{score.username}</p>
-                    <p className="card-text">{score.score}</p>
-                </div>
-            ))}
+            {loading ? (
+                <p className="leaderboard-text">Loading...</p>
+            ) : leaderboard.length === 0 ? (<>
+                <p className="leaderboard-text">No scores yet.</p>
+				<Link to={`/MovieGuessr/?genre_id=${genre}&genre_name=${getGenreName(genre)}`}>Be the first!</Link>
+				</>
+            ) : (
+                leaderboard.map((score) => (
+                    <div
+                        className="leaderboard-card"
+                        style={{
+                            animationDelay: (score.position - 1) * 0.1 + "s",
+                        }}
+                    >
+                        <p className="card-text leaderboard-position">
+                            {getPlaceString(score.position)}
+                        </p>
+                        <p className="card-text">{score.username}</p>
+                        <p className="card-text">{score.score}</p>
+                    </div>
+                ))
+            )}
         </div>
     );
 };
