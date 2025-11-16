@@ -1,4 +1,15 @@
+import {
+    collection,
+    doc,
+    getCountFromServer,
+    getDoc,
+    query,
+    serverTimestamp,
+    setDoc,
+    where,
+} from "firebase/firestore";
 import type { Movie } from "./types";
+import { db } from "./firebaseConfig";
 
 export const obscureTitle = (title: string) => {
     return title.replace(/[a-zA-Z0-9]/g, "_");
@@ -148,4 +159,42 @@ export const getGenres = () => {
     ];
 
     return genres;
+};
+
+export interface ScoreResult {
+    error?: string;
+    place?: number;
+}
+
+export const saveScore = async (
+    username: string,
+    score: number,
+    genre: number
+): Promise<ScoreResult> => {
+    const docRef = doc(db, `leaderboards/${genre}/leaderboard/${username}`);
+
+    const docSnap = await getDoc(docRef);
+
+    if (docSnap.exists()) {
+        return {
+            error: "That username is already taken on this leaderboard.",
+        };
+    }
+
+    await setDoc(docRef, {
+        score: score,
+        time: serverTimestamp(),
+    });
+
+    const q = query(
+        collection(db, `leaderboards/${genre}/leaderboard`),
+        where("score", ">=", score)
+    );
+
+    const placeSnap = await getCountFromServer(q);
+    console.log(placeSnap.data());
+
+    return {
+        place: placeSnap.data().count,
+    };
 };
