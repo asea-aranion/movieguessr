@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import "./DropDown.css"; // For styling
 
-const Dropdown = ({
+const DropDown = ({
     options,
     setGenreId,
     setGenreName,
@@ -41,4 +41,4 @@ const Dropdown = ({
     );
 };
 
-export default Dropdown;
+export default DropDown;

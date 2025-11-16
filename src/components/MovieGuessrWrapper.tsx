@@ -29,7 +29,8 @@ const MovieGuessrWrapper = () => {
 
                 do {
                     movie = await getMovieData(
-                        Number(searchParams.get("genre"))
+                        String(searchParams.get("genre_name")),
+                        Number(searchParams.get("genre_id"))
                     );
                     console.log(seenMovieIDsRef.current);
                 } while (
