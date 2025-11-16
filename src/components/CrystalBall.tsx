@@ -1,11 +1,13 @@
-function CrystalBall({prophecy}: {prophecy: string}) {
-
+function CrystalBall({ prophecy }: { prophecy: string }) {
     return (
         <>
             <div className="prophecy-container">
-                <p className="nosifer-regular">
-                    {prophecy.toLowerCase() === "true" ? "You got the movie!" : prophecy}
+                <p>
+                    {prophecy.toLowerCase() === "true"
+                        ? "You got the movie!"
+                        : prophecy}
                 </p>
+                <img src="../" />
             </div>
         </>
     );
