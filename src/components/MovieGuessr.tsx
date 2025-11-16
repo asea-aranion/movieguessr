@@ -4,6 +4,7 @@ import type { Movie } from "../types";
 import HintGrid from "./HintGrid";
 import EndRoundPopUp from "./EndRoundPopUp";
 import CrystalBall from "./CrystalBall";
+import { getProphecy } from "../utils";
 
 interface MovieGuessrProps {
     setTotalPoints: React.Dispatch<React.SetStateAction<number>>;
@@ -19,7 +20,7 @@ function MovieGuessr({
     data,
 }: MovieGuessrProps) {
     const [showPopUp, setShowPopUp] = useState(false);
-
+    const [prophecy, setProphecy] = useState("");
     const [hintCount, setHintCount] = useState(1);
     const [guess, setGuess] = useState("");
     const [points, setPoints] = useState(5000);
@@ -33,8 +34,32 @@ function MovieGuessr({
 
     // verify guess
     const verifyGuess = () => {
+        const prompt = `This is a user's guess, ${guess}, and the actual movie is ${data.title}.
+                        If the user's guess it empty, return an empty string.
+                        If they're close to the actual title, return the string true. 
+                        Close means if their guess is missing punctuation or missing
+                        a subtitle, or has a misspelled word. If they're not close, give them a one sentence hint to 
+                        guide them in the right direction. Be honest with how close they are to the 
+                        actual movie title. Do not hallucinate hints, and be
+                        as accurate as possible. Do not give them the movie title if they
+                        are not close, and address the user directly.`;
+
+        const fetchReponse = async () => {
+            try {
+                const response = await getProphecy(String(prompt));
+
+                if (response) {
+                    setProphecy(response);
+                }
+            } catch (e) {
+                console.error(e);
+            }
+        };
+
+        fetchReponse();
+
         // TODO: need to check if guess is close enough to answer
-        return guess.trim().toLowerCase() === data?.title.toLowerCase();
+        return guess.trim().toLowerCase() === data?.title.toLowerCase() || prophecy.toLowerCase() === "true";
     };
 
     // Handle form submission
@@ -128,11 +153,7 @@ function MovieGuessr({
                 )}
 
                 <div className="crystal-ball-container">
-                    <CrystalBall
-                        guess={guess}
-                        movie={data.title}
-                        hint={hintCount}
-                    />
+                    <CrystalBall prophecy = {prophecy} />
                 </div>
             </div>
         );
