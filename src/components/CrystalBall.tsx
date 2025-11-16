@@ -1,3 +1,6 @@
+import crystalBall from "../assets/animated-crystal-ball.png"
+import './CrystallBall.css'
+
 function CrystalBall({ prophecy }: { prophecy: string }) {
     return (
         <>
@@ -7,6 +10,7 @@ function CrystalBall({ prophecy }: { prophecy: string }) {
                         ? "You got the movie!"
                         : prophecy}
                 </p>
+                <img className="crystalball-img" src={crystalBall} />
             </div>
         </>
     );
