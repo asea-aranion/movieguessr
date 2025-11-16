@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import { useSearchParams } from "react-router-dom";
 import { getMovieData } from "../utils";
 import MovieGuessr from "./MovieGuessr";
@@ -12,8 +12,7 @@ const MovieGuessrWrapper = () => {
     const [data, setData] = useState<Movie | null>(null);
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const [searchParams, _] = useSearchParams();
-
-    useEffect(() => {}, [roundNum]);
+    const seenMovieIDsRef = useRef<number[]>([]);
 
     useEffect(() => {
         // eslint-disable-next-line react-hooks/set-state-in-effect
@@ -29,7 +28,9 @@ const MovieGuessrWrapper = () => {
                 let movie: Movie | null = null;
 
                 do {
-                    movie = await getMovieData();
+                    movie = await getMovieData(
+                        Number(searchParams.get("genre"))
+                    );
                     console.log(seenMovieIDsRef.current);
                 } while (
                     movie &&

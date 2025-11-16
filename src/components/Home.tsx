@@ -1,11 +1,10 @@
 import "./Home.css";
-import { useState } from 'react';
+import { useState } from "react";
 import DropDown from "./DropDown";
 import { getGenres } from "../utils";
 import { Link, createSearchParams } from "react-router-dom";
 
 export function Home() {
-
     const [showDropDown, setShowDropDown] = useState(false);
     const [selectGenreId, setSelectGenreId] = useState(0);
     const [selectGenreName, setSelectGenreName] = useState("");
@@ -15,7 +14,9 @@ export function Home() {
         setShowDropDown(!showDropDown);
     };
 
-    const dismissHandler = (event: React.FocusEvent<HTMLButtonElement>): void => {
+    const dismissHandler = (
+        event: React.FocusEvent<HTMLButtonElement>
+    ): void => {
         if (event.currentTarget === event.target) {
             setShowDropDown(false);
         }
@@ -32,7 +33,11 @@ export function Home() {
                         dismissHandler(e)
                     }
                 >
-                    <div>{selectGenreName ? "Select: " + selectGenreName : "Select ..."} </div>
+                    <div>
+                        {selectGenreName
+                            ? "Select: " + selectGenreName
+                            : "Select ..."}{" "}
+                    </div>
                     {showDropDown && (
                         <DropDown
                             options={listOfGenres}
@@ -41,10 +46,14 @@ export function Home() {
                         />
                     )}
                 </button>
-                <Link to={{
-                    pathname: "/MovieGuessr",
-                    search: `?${createSearchParams({genre: String(selectGenreId)})}`
-                }}>Start playing!</Link>
+                <Link
+                    to={{
+                        pathname: "/MovieGuessr",
+                        search: `?${createSearchParams({ genre: String(selectGenreId) })}`,
+                    }}
+                >
+                    Start playing!
+                </Link>
             </div>
         </div>
     );

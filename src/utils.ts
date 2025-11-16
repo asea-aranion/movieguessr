@@ -4,13 +4,12 @@ export const obscureTitle = (title: string) => {
     return title.replace(/[a-zA-Z0-9]/g, "_");
 };
 
-
 export const getMovieData = async (genreID: number): Promise<Movie> => {
     const pageNum = Math.floor(Math.random() * 4) + 1;
 
     // fetch popular movies
     const response = await fetch(
-        `https://api.themoviedb.org/3/discover/movie?include_adult=false&include_video=false&language=en-US&page=${pageNum}&sort_by=popularity.desc&vote_average.gte=6&vote_count.gte=1000&with_origin_country=US${genreID === 0 ? '': '&with_genres=' + genreID}&api_key=${import.meta.env.VITE_REACT_APP_API_KEY}`,
+        `https://api.themoviedb.org/3/discover/movie?include_adult=false&include_video=false&language=en-US&page=${pageNum}&sort_by=popularity.desc&vote_average.gte=6&vote_count.gte=1000&with_origin_country=US${genreID === 0 ? "" : "&with_genres=" + genreID}&api_key=${import.meta.env.VITE_REACT_APP_API_KEY}`,
         {
             method: "GET",
             headers: {
@@ -72,81 +71,81 @@ export const getGenres = () => {
     const genres = [
         {
             id: 28,
-            name: "Action"
+            name: "Action",
         },
         {
             id: 12,
-            name: "Adventure"
+            name: "Adventure",
         },
         {
             id: 16,
-            name: "Animation"
+            name: "Animation",
         },
         {
             id: 35,
-            name: "Comedy"
+            name: "Comedy",
         },
         {
             id: 80,
-            name: "Crime"
+            name: "Crime",
         },
         {
             id: 99,
-            name: "Documentary"
+            name: "Documentary",
         },
         {
             id: 18,
-            name: "Drama"
+            name: "Drama",
         },
         {
             id: 10751,
-            name: "Family"
+            name: "Family",
         },
         {
             id: 14,
-            name: "Fantasy"
+            name: "Fantasy",
         },
         {
             id: 36,
-            name: "History"
+            name: "History",
         },
         {
             id: 27,
-            name: "Horror"
+            name: "Horror",
         },
         {
             id: 10402,
-            name: "Music"
+            name: "Music",
         },
         {
             id: 9648,
-            name: "Mystery"
+            name: "Mystery",
         },
         {
             id: 10749,
-            name: "Romance"
+            name: "Romance",
         },
         {
             id: 878,
-            name: "Science Fiction"
+            name: "Science Fiction",
         },
         {
             id: 10770,
-            name: "TV Movie"
+            name: "TV Movie",
         },
         {
             id: 53,
-            name: "Thriller"
+            name: "Thriller",
         },
         {
             id: 10752,
-            name: "War"
+            name: "War",
         },
         {
             id: 37,
-            name: "Western"
-        }
-    ]
+            name: "Western",
+        },
+    ];
 
     return genres;
-}
+};
