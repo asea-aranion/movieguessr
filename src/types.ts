@@ -13,3 +13,5 @@ export interface LeaderboardScore {
     score: number;
     position: number;
 }
+
+export type LeaderboardDateRange = "day" | "month" | "all";

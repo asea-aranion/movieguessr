@@ -1,0 +1,48 @@
+.leaderboards-cont {
+    display: flex;
+    flex-flow: column nowrap;
+    gap: 1.5rem;
+    align-items: center;
+}
+
+.leaderboard-card {
+    display: flex;
+    flex-flow: row nowrap;
+    gap: 1rem;
+    align-items: center;
+    justify-content: flex-start;
+    width: 400px;
+    max-width: 90vw;
+    padding: 1rem;
+    box-sizing: border-box;
+    border-radius: 2rem;
+    background-color: var(--hint-background);
+}
+
+.leaderboard-card:first-of-type {
+    transform: scale(1.2);
+}
+
+.card-text {
+    margin: 0;
+    font-size: 20px;
+}
+
+.leaderboard-position {
+    border: var(--border) 1px solid;
+    font-weight: bold;
+    font-size: 24px;
+    width: 60px;
+    height: 60px;
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: center;
+    align-items: center;
+    border-radius: 100%;
+}
+
+.leaderboard-dropdown {
+    width: 400px;
+    position: relative;
+    left: auto;
+}
