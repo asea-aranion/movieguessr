@@ -48,11 +48,16 @@ const MovieGuessrWrapper = () => {
         };
 
         fetchUniqueMovie();
-    }, [roundNum]);
+    }, [roundNum, searchParams]);
 
     return (
         <>
-            {showingPopUp && <EndGamePopUp points={totalPoints}></EndGamePopUp>}
+            {showingPopUp && (
+                <EndGamePopUp
+                    points={totalPoints}
+                    genre={Number(searchParams.get("genre_id"))}
+                ></EndGamePopUp>
+            )}
             {data && (
                 <MovieGuessr
                     setTotalPoints={setTotalPoints}
