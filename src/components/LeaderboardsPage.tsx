@@ -3,12 +3,14 @@ import "./LeaderboardsPage.css";
 import type { LeaderboardScore, LeaderboardDateRange } from "../types";
 import { genres, getLeaderboard, getPlaceString } from "../utils";
 import DropDown from "./DropDown";
+import { useSearchParams } from "react-router-dom";
 
 const LeaderboardsPage = () => {
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const [dateRange, _] = useState<LeaderboardDateRange>("all");
     const [showDropdown, setShowDropdown] = useState(false);
-    const [genre, setGenre] = useState(0);
+	const paramsResult = useSearchParams();
+    const [genre, setGenre] = useState(Number(paramsResult[0].get("genre") || 0));
     const [leaderboard, setLeaderboard] = useState<LeaderboardScore[]>([]);
 
     const dismissHandler = (
@@ -21,7 +23,6 @@ const LeaderboardsPage = () => {
 
     useEffect(() => {
         getLeaderboard(genre, dateRange).then((data) => setLeaderboard(data));
-        console.log(dateRange);
     }, [genre, dateRange]);
 
     return (

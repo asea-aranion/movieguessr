@@ -199,7 +199,6 @@ export const saveScore = async (
     );
 
     const placeSnap = await getCountFromServer(q);
-    console.log(placeSnap.data());
 
     return {
         place: placeSnap.data().count,
