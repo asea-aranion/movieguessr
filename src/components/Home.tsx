@@ -7,7 +7,7 @@ import { Link, createSearchParams } from "react-router-dom";
 export function Home() {
     const [showDropDown, setShowDropDown] = useState(false);
     const [selectGenreId, setSelectGenreId] = useState(0);
-    const [selectGenreName, setSelectGenreName] = useState("");
+    const [selectGenreName, setSelectGenreName] = useState("Any Category");
     const listOfGenres = getGenres();
 
     const toggleDropDown = () => {
@@ -23,9 +23,10 @@ export function Home() {
     };
 
     return (
-        <div>
-            <h1>Home</h1>
+        <>
             <div className="home-body-container">
+                <h1>Welcome to MovieGuessr!</h1>
+                <p className="category-direction">Choose a category to compete in:</p>
                 <button
                     className={showDropDown ? "active" : undefined}
                     onClick={(): void => toggleDropDown()}
@@ -34,9 +35,7 @@ export function Home() {
                     }
                 >
                     <div>
-                        {selectGenreName
-                            ? "Select: " + selectGenreName
-                            : "Select ..."}{" "}
+                        {selectGenreName}
                     </div>
                     {showDropDown && (
                         <DropDown
@@ -49,13 +48,13 @@ export function Home() {
                 <Link
                     to={{
                         pathname: "/MovieGuessr",
-                        search: `?${createSearchParams({ genre: String(selectGenreId) })}`,
+                        search: `?${createSearchParams({ genre_name: selectGenreName.toLowerCase(), genre_id: String(selectGenreId) })}`,
                     }}
                 >
                     Start playing!
                 </Link>
             </div>
-        </div>
+        </>
     );
 }
 

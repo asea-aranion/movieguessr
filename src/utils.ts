@@ -15,8 +15,9 @@ export const obscureTitle = (title: string) => {
     return title.replace(/[a-zA-Z0-9]/g, "_");
 };
 
-export const getMovieData = async (genreID: number): Promise<Movie> => {
+export const getMovieData = async (genre: string, genreID: number): Promise<Movie> => {
     const pageNum = Math.floor(Math.random() * 4) + 1;
+    console.log("genre name:", genre)
 
     // fetch popular movies
     const response = await fetch(
@@ -81,6 +82,10 @@ export const getMovieData = async (genreID: number): Promise<Movie> => {
 export const getGenres = () => {
     const genres = [
         {
+            id: 0,
+            name: "Any Category",
+        },
+        {
             id: 28,
             name: "Action",
         },
@@ -99,10 +104,6 @@ export const getGenres = () => {
         {
             id: 80,
             name: "Crime",
-        },
-        {
-            id: 99,
-            name: "Documentary",
         },
         {
             id: 18,
