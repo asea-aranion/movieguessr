@@ -7,3 +7,9 @@ export interface Movie {
     plotOverview: string;
     posterPath: string;
 }
+
+export interface LeaderboardScore {
+    username: string;
+    score: number;
+    position: number;
+}
