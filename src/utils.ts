@@ -108,7 +108,7 @@ export const getMovieData = async (
 export const genres = [
     {
         id: 0,
-        name: "Any Category",
+        name: "Any Genre",
     },
     {
         id: 28,

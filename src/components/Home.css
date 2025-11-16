@@ -9,12 +9,54 @@ a {
     align-content: center;
     justify-content: center;
     min-height: 90vh;
+    gap: 1rem;
 }
 
 h1 {
     font-size: 4em;
 }
 
+.home-title {
+    animation-delay: 0s !important;
+}
+
+.home-body-container * {
+    animation-name: fade-in;
+    animation-duration: 1s;
+    animation-timing-function: ease;
+    animation-delay: 0.5s;
+    animation-fill-mode: both;
+}
+
 .category-direction {
-    font-size: 1.5em;
+    font-size: 22px;
+    margin: 0;
+}
+
+.home-button {
+    border: var(--border) 1px solid;
+    font-family: inherit;
+    font-size: 20px;
+    background-color: transparent;
+    color: var(--border);
+    padding: 0.4rem 1.2rem;
+    border-radius: 2rem;
+    transition: background-color 0.5s ease;
+    width: 400px;
+    max-width: 90vw;
+    align-self: center;
+}
+
+.home-button:hover {
+    background-color: var(--border);
+    color: var(--background);
+}
+
+hr {
+    border: var(--border) 0.5px solid;
+    width: 60vw;
+    margin-block: 0;
+    margin-inline: 0;
+    margin: 1rem 0;
+    align-self: center;
 }
