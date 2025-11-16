@@ -34,58 +34,66 @@ const LeaderboardsPage = () => {
     }, [genre, dateRange]);
 
     return (
-        <div className="leaderboards-cont">
-            <h1>Leaderboards</h1>
-            <button
-                className={
-                    showDropdown
-                        ? "menu active leaderboard-dropdown"
-                        : "menu leaderboard-dropdown"
-                }
-                onClick={() => setShowDropdown((value) => !value)}
-                onBlur={(e: React.FocusEvent<HTMLButtonElement>): void =>
-                    dismissHandler(e)
-                }
-            >
-                <div>
-                    {genres.find((element) => element.id === genre)?.name || ""}
-                </div>
-                {showDropdown && (
-                    <DropDown
-                        options={genres}
-                        setGenreId={setGenre}
-                        setGenreName={() => {}}
-                    />
-                )}
-            </button>
-            {loading ? (
-                <p className="leaderboard-text">Loading...</p>
-            ) : leaderboard.length === 0 ? (
-                <>
-                    <p className="leaderboard-text">No scores yet.</p>
-                    <Link
-                        to={`/MovieGuessr/?genre_id=${genre}&genre_name=${getGenreName(genre)}`}
-                    >
-                        Be the first!
-                    </Link>
-                </>
-            ) : (
-                leaderboard.map((score) => (
-                    <div
-                        className="leaderboard-card"
-                        style={{
-                            animationDelay: (score.position - 1) * 0.1 + "s",
-                        }}
-                    >
-                        <p className="card-text leaderboard-position">
-                            {getPlaceString(score.position)}
-                        </p>
-                        <p className="card-text">{score.username}</p>
-                        <p className="card-text">{score.score}</p>
+        <>
+            <div className="floating">
+                <Link to="/">Back to Home</Link>
+            </div>
+
+            <div className="leaderboards-cont">
+                <h1>Leaderboards</h1>
+                <button
+                    className={
+                        showDropdown
+                            ? "menu active leaderboard-dropdown"
+                            : "menu leaderboard-dropdown"
+                    }
+                    onClick={() => setShowDropdown((value) => !value)}
+                    onBlur={(e: React.FocusEvent<HTMLButtonElement>): void =>
+                        dismissHandler(e)
+                    }
+                >
+                    <div>
+                        {genres.find((element) => element.id === genre)?.name ||
+                            ""}
                     </div>
-                ))
-            )}
-        </div>
+                    {showDropdown && (
+                        <DropDown
+                            options={genres}
+                            setGenreId={setGenre}
+                            setGenreName={() => {}}
+                        />
+                    )}
+                </button>
+                {loading ? (
+                    <p className="leaderboard-text">Loading...</p>
+                ) : leaderboard.length === 0 ? (
+                    <>
+                        <p className="leaderboard-text">No scores yet.</p>
+                        <Link
+                            to={`/MovieGuessr/?genre_id=${genre}&genre_name=${getGenreName(genre)}`}
+                        >
+                            Be the first!
+                        </Link>
+                    </>
+                ) : (
+                    leaderboard.map((score) => (
+                        <div
+                            className="leaderboard-card"
+                            style={{
+                                animationDelay:
+                                    (score.position - 1) * 0.1 + "s",
+                            }}
+                        >
+                            <p className="card-text leaderboard-position">
+                                {getPlaceString(score.position)}
+                            </p>
+                            <p className="card-text">{score.username}</p>
+                            <p className="card-text">{score.score}</p>
+                        </div>
+                    ))
+                )}
+            </div>
+        </>
     );
 };
 
