@@ -20,12 +20,21 @@ h1 {
     animation-delay: 0s !important;
 }
 
-.home-body-container * {
+.home-title,
+.category-direction,
+.home-body-container > .menu,
+.home-body-container > a,
+.home-body-container > hr,
+.home-button {
     animation-name: fade-in;
     animation-duration: 1s;
     animation-timing-function: ease;
     animation-delay: 0.5s;
     animation-fill-mode: both;
+}
+
+.home-body-container > .menu {
+    z-index: 4;
 }
 
 .category-direction {

@@ -5,6 +5,7 @@ import HintGrid from "./HintGrid";
 import EndRoundPopUp from "./EndRoundPopUp";
 import CrystalBall from "./CrystalBall";
 import { getProphecy } from "../utils";
+import animatedGhost from "../assets/animated-ghost.png";
 
 interface MovieGuessrProps {
     setTotalPoints: React.Dispatch<React.SetStateAction<number>>;
@@ -110,8 +111,20 @@ function MovieGuessr({
     } else {
         return (
             <div className="movieguessr-container">
-                <h1 className={genreID === 27 ? "spooky-title" : ""}>
-                    MovieGuessr
+                {genreID === 27 && (
+                    <img
+                        className="ghost"
+                        src={animatedGhost}
+                        alt="An animated cartoon ghost."
+                    />
+                )}
+                <h1>
+                    {genreID === 27 ? (
+                        <span className="spooky-title">Spooky</span>
+                    ) : (
+                        "Movie"
+                    )}
+                    Guessr
                 </h1>
 
                 <h2 className="round-count">Round {roundNum}</h2>
