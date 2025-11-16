@@ -5,6 +5,7 @@ import HintGrid from "./HintGrid";
 import EndRoundPopUp from "./EndRoundPopUp";
 import CrystalBall from "./CrystalBall";
 import { getProphecy } from "../utils";
+import animatedGhost from "../assets/animated-ghost.png";
 
 interface MovieGuessrProps {
     setTotalPoints: React.Dispatch<React.SetStateAction<number>>;
@@ -19,7 +20,7 @@ function MovieGuessr({
     roundNum,
     setRoundNum,
     data,
-    genreID
+    genreID,
 }: MovieGuessrProps) {
     const [showPopUp, setShowPopUp] = useState(false);
     const [prophecy, setProphecy] = useState("");
@@ -35,42 +36,43 @@ function MovieGuessr({
     };
 
     // verify guess
-    const verifyGuess = () => {
+    const verifyGuess = async () => {
+        if (guess.trim().toLowerCase() === data?.title.toLowerCase()) {
+            return true;
+        } else if (hintCount < 2) {
+            return false;
+        }
+
         const prompt = `This is a user's guess, ${guess}, and the actual movie is ${data.title}.
-                        If the user's guess it empty, return an empty string.
-                        If they're close to the actual title, return the string true. 
-                        Close means if their guess is missing punctuation or missing
-                        a subtitle, or has a misspelled word. If they're not close, give them a one sentence hint to 
+						If this: "${guess}" is "",
+						return ONLY a small, not too easy, one-sentence hint towards the actual movie title, WITHOUT saying "You are not close.", and disregard the rest of this prompt.
+						For our purposes, "close" means if their guess is missing punctuation or missing
+                        a subtitle, or has a misspelled word. 
+                        If they're close to the actual title, return ONLY the string "true" and disregard the rest of this prompt. 
+                        If they're not close, say something like "You are not close.", then give them a small, not too easy, one-sentence hint to 
                         guide them in the right direction. Be honest with how close they are to the 
                         actual movie title. Do not hallucinate hints, and be
                         as accurate as possible. Do not give them the movie title if they
                         are not close, and address the user directly.`;
 
-        const fetchReponse = async () => {
-            try {
-                const response = await getProphecy(String(prompt));
+        try {
+            const response = await getProphecy(prompt);
 
-                if (response) {
-                    setProphecy(response);
-                }
-            } catch (e) {
-                console.error(e);
+            if (response === "true") {
+                return true;
+            } else {
+                setProphecy(response);
             }
-        };
-
-        fetchReponse();
-
-        // TODO: need to check if guess is close enough to answer
-        return (
-            guess.trim().toLowerCase() === data?.title.toLowerCase() ||
-            prophecy.toLowerCase() === "true"
-        );
+        } catch (e) {
+            console.error(e);
+        }
+        return false;
     };
 
     // Handle form submission
-    const submitGuess = (event: React.MouseEvent<HTMLButtonElement>) => {
+    const submitGuess = async (event: React.MouseEvent<HTMLButtonElement>) => {
         event.preventDefault();
-        const isCorrect = verifyGuess();
+        const isCorrect = await verifyGuess();
         let isRoundOver = false;
 
         if (isCorrect) {
@@ -109,7 +111,21 @@ function MovieGuessr({
     } else {
         return (
             <div className="movieguessr-container">
-                <h1 className={genreID === 27 ? "spooky-title": ""}>MovieGuessr</h1>
+                {genreID === 27 && (
+                    <img
+                        className="ghost"
+                        src={animatedGhost}
+                        alt="An animated cartoon ghost."
+                    />
+                )}
+                <h1>
+                    {genreID === 27 ? (
+                        <span className="spooky-title">Spooky</span>
+                    ) : (
+                        "Movie"
+                    )}
+                    Guessr
+                </h1>
 
                 <h2 className="round-count">Round {roundNum}</h2>
 

@@ -5,6 +5,22 @@
     align-items: center;
 }
 
+.leaderboard-text {
+    margin: 0;
+    font-size: 22px;
+}
+
+.floating {
+    position: fixed;
+    top: 20px;
+    left: 30px;
+    width: fit-content;
+    height: fit-content;
+    border: var(--border) 1px solid;
+    border-radius: 2rem;
+    padding: 1rem;
+}
+
 .leaderboard-card {
     display: flex;
     flex-flow: row nowrap;
@@ -17,6 +33,10 @@
     box-sizing: border-box;
     border-radius: 2rem;
     background-color: var(--hint-background);
+    animation-name: fade-in;
+    animation-duration: 0.3s;
+    animation-timing-function: ease;
+    animation-fill-mode: both;
 }
 
 .leaderboard-card:first-of-type {

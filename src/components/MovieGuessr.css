@@ -14,6 +14,24 @@
     justify-content: flex-start;
 }
 
+@keyframes across-screen {
+    from {
+        transform: translate(0, 0);
+    }
+    to {
+        transform: translate(calc(-100vw - 480px), 30vh);
+    }
+}
+
+.ghost {
+    position: fixed;
+    right: -480px;
+    animation-name: across-screen;
+    animation-duration: 9s;
+    animation-timing-function: linear;
+    animation-fill-mode: both;
+}
+
 .round-count {
     margin: 0;
     font-size: 26px;

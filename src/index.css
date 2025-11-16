@@ -37,3 +37,12 @@ h1 {
     font-size: 36px;
     margin: 0;
 }
+
+@keyframes fade-in {
+    from {
+        opacity: 0%;
+    }
+    to {
+        opacity: 100%;
+    }
+}

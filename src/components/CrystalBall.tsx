@@ -1,5 +1,3 @@
-import animatedGhost from '../assets/animated-ghost.png'
-
 function CrystalBall({ prophecy }: { prophecy: string }) {
     return (
         <>
@@ -9,7 +7,6 @@ function CrystalBall({ prophecy }: { prophecy: string }) {
                         ? "You got the movie!"
                         : prophecy}
                 </p>
-                <img src={animatedGhost} />
             </div>
         </>
     );
